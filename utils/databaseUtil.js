@@ -2,7 +2,8 @@ const mongo = require('mongodb');
 
 const MongoClient = mongo.MongoClient;
 
-const mongoUrl = "mongodb+srv://lakraritanshu:765321@practicecluster0.kmxduwb.mongodb.net/?retryWrites=true&w=majority&appName=practiceCluster0";
+require('dotenv').config();
+const mongoUrl = process.env.DB_PATH;
 
 let _dB;
 const mongoConnect = (callback) =>{
