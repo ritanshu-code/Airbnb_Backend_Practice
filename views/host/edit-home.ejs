@@ -1,0 +1,88 @@
+<%- include('../partials/head') %>
+<body>
+    <%- include('../partials/nav') %>
+    <main class="flex items-center justify-center gap-8 ">
+        <div class="flex  items-center justify-center gap-8 bg-gray-100 p-8 max-w-md  rounded-2xl shadow-lg">
+            
+        
+        <form action="/host/edit-home" method="POST" class="w-full" enctype="multipart/form-data">
+            <div class="flex flex-col gap-6 w-full">
+                <h1 class="text-3xl text-center font-bold mb-">Edit your home on <span class="text-red-500">Airbnb!</span></h1>
+                <div class="flex flex-col gap-2 w-full">
+                    <input type="hidden" name="id" value="<%= editing ? home.id : '' %>">
+                    <input type="hidden" name="existingPhoto" value="<%= editing ? home.photo : '' %>">
+                    
+                    <input 
+                    class="p-2 border-2 border-gray-300 focus:border-red-500 rounded-2xl w-full" type="text" 
+                    value = "<%= home.homeName %>"
+                    placeholder="Enter your Home name" 
+                    id="homeName" 
+                    name="homeName" 
+                    required>
+                </div>
+                <div class="flex flex-col gap-2 w-full">
+                    
+                    <input 
+                    class="p-2 border-2 border-gray-300 focus:border-red-500 rounded-2xl w-full" 
+                    type="text" 
+                    value= "<%= home.location %>"
+                    placeholder="Enter your location" 
+                    id="location" 
+                    name="location" required>
+                </div>
+                <div class="flex flex-col gap-2 w-full">
+                    
+                    <input 
+                    class="p-2 border-2 border-gray-300 focus:border-red-500 rounded-2xl w-full" type="number" 
+                    value= "<%= home.price %>"
+                    min="0" 
+                    step="0.01" placeholder="Enter price per night" id="price" 
+                    name="price" 
+                    required>
+                </div>
+                <div class="flex flex-col gap-2 w-full ">
+                    
+                    <input 
+                    class="p-2 border-2 border-gray-300 focus:border-red-500 rounded-2xl w-full" type="number" 
+                    value= "<%= home.rating %>"
+                    min="0" 
+                    max="5" 
+                    step="0.1" placeholder="Enter rating (0-5)" 
+                    id="rating" name="rating"
+                     required>
+                </div>
+                <div class="flex flex-col gap-2 w-full ">
+                    
+                    <input 
+                    class="p-2 border-2 border-gray-300 focus:border-red-500 rounded-2xl w-full" type="text" 
+                    value= "<%= home.description %>"
+                     placeholder="Enter description" 
+                    id="description" name="description"
+                     required>
+                </div>
+                <div class="flex flex-col gap-2 w-full">
+                    
+                    
+                    <input 
+                    class="p-2 border-2 border-gray-300 focus:border-red-500 rounded-2xl w-full" type="file" 
+                    id="photo" 
+                    name="photo" accept="image/*" 
+                    >
+                </div>
+                <button class="w-full bg-green-300 p-2 border-2 border-green-700 rounded-2xl transition-all duration-200 hover:bg-green-500 hover:text-white hover:border-green-200 font-semibold"
+                 type="submit">Edit Home</button>
+            </div>
+        </form>
+         </div>
+         <div>
+
+             <% if (editing && home.photo) { %>
+                <div class="">
+                    <p class="text-gray-600">Current photo:</p>
+                    <img src="/uploads/<%= home.photo %>" alt="Home Photo" class="w-48 rounded-xl border shadow-md">
+                </div>
+                <% } %>
+            </div>
+    </main>
+</body>
+</html>

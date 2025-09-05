@@ -1,0 +1,24 @@
+<%- include('../partials/head') %>
+<body>
+    <%- include('../partials/nav') %>
+    <main class="flex flex-col items-center justify-center gap-8 bg-gray-100 p-8 max-w-md mx-auto rounded-2xl shadow-lg">
+        <h1 class="text-3xl text-center font-bold mb-">Login on Airbnb!</h1>
+        <%- include('../partials/errors', { errors: errorMessage }) %>
+        <form action="/login" method="POST" class="w-full" >
+            <div class="flex flex-col gap-6 w-full">
+                    
+                    <input class="p-2 border-2 border-gray-300 focus:border-red-500 rounded-2xl w-full" type="email" 
+                    value="<%= oldInput.email ? oldInput.email : '' %>"
+                    placeholder="Enter your email " id="email" name="email" required>
+                    
+                    <input class="p-2 border-2 border-gray-300 focus:border-red-500 rounded-2xl w-full" type="password" placeholder="Enter your password" id="password" name="password" required>
+
+                    
+                    <button class="w-full bg-red-200 p-2 border-2 border-red-200 rounded-2xl transition-all duration-200 hover:bg-red-600 hover:text-white hover:border-red-700 font-semibold" type="submit"
+                    >Login</button>
+                </div>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

@@ -1,0 +1,79 @@
+body{
+    background-color: white;
+     font-family: 'Montserrat', sans-serif;
+
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 32px;
+    background: #fff;
+    border-radius: 50px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.nav-left {
+    flex: 1;
+    text-align: left;
+    color: #e61616;
+    font-weight: bold;
+}
+
+.nav-center {
+    flex: 1;
+    text-align: center;
+}
+
+.nav-right {
+    flex: 1;
+    text-align: right;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 32px ;
+    max-width: fit-content;
+    display: flex;
+    gap: 24px;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+ul li {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(230,22,22,0.15);
+    border: 1.5px solid #e61616;
+    padding: 18px 28px;
+    font-size: 1.1rem;
+    align-items: center;
+    min-height: 48px;
+}
+
+
+nav a {
+    color: #111;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 8px;
+}
+
+/* Style only the add home link as a button */
+.nav-right a {
+    padding: 8px 20px;
+    border: 2px solid transparent;
+    border-radius: 24px;
+    background: #f5f5f5;
+    transition: border-color 0.2s;
+    font-weight: bold;
+}
+.nav-right a:hover {
+    border-color: #e61616;
+}
+
+.heading {
+    color: #111;
+    text-align: center;
+}

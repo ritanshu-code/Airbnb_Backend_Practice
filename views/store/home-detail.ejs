@@ -1,0 +1,24 @@
+
+<%- include('../partials/head') %>
+</head>
+<body>
+    <%- include('../partials/nav') %>
+    <main class="flex flex-col items-center   mx-auto ">
+        <h1 class="text-center text-black text-3xl font-bold mb-2" style="font-family: 'Montserrat', sans-serif;">You are in Home Details page:</h1>
+        <ul class="flex flex-wrap gap-6 w-full ml-12  ">
+                <li class=" rounded-2xl shadow-lg border-2 border-transparent hover:border-red-600 transition-colors flex flex-col items-center  max-w-xs w-full">
+                        <% if (home.photo) { %>
+                            <img src="/uploads/<%= home.photo %>" alt="Home photo" class="mb-4 rounded-xl w-full max-h-48 object-cover" />
+                        <% } %>
+                        <div class="p-4 flex flex-col gap-2">
+                            <h2 class="text-xl font-semibold mb-1 text-center"><%= home.homeName %></h2>
+                            <p class="text-gray-700 text-center">Location: <%= home.location %></p>
+                            <p class="text-gray-700 text-center">Price per night: ₹<%= home.price %></p>
+                            <p class="text-gray-700 text-center">Rating: <%= home.rating %> / 5</p>
+                            <%- include('../partials/favourite') %>
+                        </div>
+                    </li>
+        </ul>
+    </main>
+</body>
+</html>
