@@ -7,6 +7,7 @@ const homesController = require('../controllers/storeController');
 storeRouter.get('/', homesController.getIndex); 
 storeRouter.get('/homes', homesController.getHomes); // Route to get all homes)
 storeRouter.get('/bookings', homesController.getBookings); 
+storeRouter.post('/bookings', homesController.postBooking); 
 storeRouter.get('/favourite', homesController.getFavouriteList); 
 
 storeRouter.get('/homes/:homeId', homesController.getHomeDetails); 

@@ -1,4 +1,5 @@
 const Favourite = require('../models/favourite');
+const Booking = require('../models/booking');
 const Home = require('../models/home');
 
 
@@ -10,12 +11,59 @@ exports.getHomes = (req, res, next) => {
      Home.find().then(homes => res.render('store/home-list', { homes: homes, pageTitle: 'Homes List',isLoggedIn: req.isLoggedIn,currentPage: "Home", user: req.session.user }) );
 }
 
-exports.getBookings = (req, res, next) => {
-     res.render('store/bookings', {  pageTitle: "My Bookings",
-    currentPage: "bookings",
-    isLoggedIn: req.isLoggedIn, 
-    user: req.session.user, }); 
-}
+exports.getBookings = async (req, res, next) => {
+     console.log("Query params :", req.query);
+     const showModal = req.query.modal === 'true';
+     const homeId = req.query.homeId;
+     
+     try {
+        const bookings = await Booking.find({ userId: req.session.user._id }).populate("homeId");
+
+        // extract the homes with booking details
+        const bookedHomes = bookings.map(b => ({
+            home: b.homeId,
+            checkIn: b.checkIn,
+            checkOut: b.checkOut
+        }));
+
+        res.render("store/bookings", {
+            bookedHomes,
+            showModal,
+            homeId,
+            pageTitle: "My Bookings",
+            currentPage: "bookings",
+            isLoggedIn: req.isLoggedIn,
+            user: req.session.user
+        });
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+}; 
+
+
+exports.postBooking = async (req, res, next) => {
+     console.log("Booking data :", req.body);
+     
+    try {
+        const { homeId, checkIn, checkOut } = req.body;
+        const booking = new Booking({
+            homeId,
+            userId: req.session.user._id, // assuming logged in
+            checkIn,
+            checkOut
+        });
+        await booking.save();
+
+        res.redirect("/bookings"); // after booking, show bookings list
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+};
+
+
+
 exports.getFavouriteList = (req, res, next) => {
      Favourite.find().then(favourite => {
           favourite = favourite.map(fav => fav.homeId.toString());

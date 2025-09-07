@@ -1,9 +1,81 @@
 <%- include('../partials/head') %>
-<body>
-    <%- include('../partials/nav') %>
-    <div class="text-center ">
-        <h1 class="text-3xl text-red-400">Bookings</h1>
-    </div>
-</body>
 
-</html>
+    <body>
+        <%- include('../partials/nav') %>
+            <div class="text-center ">
+                <h1 class="text-3xl text-red-400">Bookings</h1>
+                <% if (bookedHomes && bookedHomes.length> 0) { %>
+                    <ul class="flex flex-wrap gap-6 w-full ml-12">
+                        <% bookedHomes.forEach(booked=> { %>
+                            <li
+                                class="rounded-2xl shadow-lg border-2 border-transparent hover:border-blue-600 transition-colors flex flex-col items-center max-w-xs w-full">
+
+                                <% if (booked.home.photo) { %>
+                                    <img src="/uploads/<%= booked.home.photo %>" alt="Home photo"
+                                        class="mb-4 rounded-xl w-full max-h-48 object-cover" />
+                                    <% } %>
+
+                                        <div class="p-4">
+                                            <h2 class="text-xl font-semibold mb-1 text-center">
+                                                <%= booked.home.homeName %>
+                                            </h2>
+                                            <p class="text-gray-700 text-center">
+                                                Location: <%= booked.home.location %>
+                                            </p>
+                                            <p class="text-gray-700 text-center">
+                                                Price per night: ₹<%= booked.home.price %>
+                                            </p>
+                                            <p class="text-gray-700 text-center">
+                                                Rating: <%= booked.home.rating %> / 5
+                                            </p>
+
+                                            <!-- Booking-specific info -->
+                                            <p class="text-gray-600 text-center mt-2">
+                                                Check-in: <%= booked.checkIn.toDateString() %>
+                                            </p>
+                                            <p class="text-gray-600 text-center">
+                                                Check-out: <%= booked.checkOut.toDateString() %>
+                                            </p>
+                                        </div>
+                            </li>
+                            <% }) %>
+                    </ul>
+                    <% } else { %>
+                        <p class="text-center text-gray-600 mt-6">
+                            You have no bookings yet.
+                        </p>
+                        <% } %>
+
+                            <% if (showModal) { %>
+                                <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                    <div class="bg-white p-6 rounded-xl w-96 shadow-lg relative">
+                                        <button
+                                            class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl font-bold"
+                                            onclick="window.location.href='/bookings'">&times;</button>
+
+                                        <h2 class="text-2xl font-bold mb-4">Booking Details</h2>
+                                        <form action="/bookings" method="POST">
+
+                                            <input type="hidden" name="homeId" value="<%= homeId %>">
+
+                                            <label class="block mb-2 font-medium">Check-in Date</label>
+                                            <input type="date" name="checkIn" class="border w-full p-2 rounded mb-4"
+                                                required />
+
+                                            <label class="block mb-2 font-medium">Check-out Date</label>
+                                            <input type="date" name="checkOut" class="border w-full p-2 rounded mb-4"
+                                                required />
+
+                                            <button type="submit"
+                                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">
+                                                Confirm Booking
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <% } %>
+
+            </div>
+    </body>
+
+    </html>
