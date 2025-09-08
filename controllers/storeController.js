@@ -3,10 +3,37 @@ const Booking = require('../models/booking');
 const Home = require('../models/home');
 
 
-exports.getIndex = (req, res, next) => {     
-     Home.find().then(homes => res.render('store/index', { homes: homes, pageTitle: 'Home',isLoggedIn: req.isLoggedIn,user: req.session.user, currentPage: "index" }))
-          
-}
+exports.getIndex = async (req, res, next) => {
+     console.log("Query params :", req.query);
+    try {
+        const query = req.query.q;  // get search query
+        let filter = {};
+
+        if (query && query.trim().length > 0) {
+            filter = {
+                $or: [
+                    { homeName: { $regex: query, $options: "i" } },
+                    { location: { $regex: query, $options: "i" } }
+                ]
+            };
+        }
+
+        const homes = await Home.find(filter);
+
+        res.render("store/index", {
+            homes,
+            pageTitle: "Home",
+            isLoggedIn: req.isLoggedIn,
+            user: req.session.user,
+            currentPage: "index",
+            query // pass query back so search bar remembers
+        });
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+};
+
 exports.getHomes = (req, res, next) => {
      Home.find().then(homes => res.render('store/home-list', { homes: homes, pageTitle: 'Homes List',isLoggedIn: req.isLoggedIn,currentPage: "Home", user: req.session.user }) );
 }
